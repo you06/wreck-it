@@ -336,6 +336,9 @@ func (g *Generator) walkResultFields(node *ast.SelectStmt, usedTables []Table) [
 	columns := make([]TableColumn, 0)
 	for _, table := range usedTables {
 		for _, column := range table.Columns {
+			if column[0] != "id" {
+				continue
+			}
 			selectField := ast.SelectField{
 				Expr: &ast.ColumnNameExpr{
 					Name: &ast.ColumnName{

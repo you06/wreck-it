@@ -170,8 +170,8 @@ func (p *Pivot) progress(ctx context.Context) {
 	// verify pivot row in result row set
 	correct := p.verify(pivotRows, columns, resultRows)
 	if !correct {
-		panic(fmt.Sprintf("data verified failed. pivot rows: %s . result rows: %s . query: %s",
-			pivotRows, resultRows, selectStmt,
+		panic(fmt.Sprintf("data verified failed. pivotRows: %+v, result rows: %d. query: [%s]\n",
+			pivotRows, len(resultRows), selectStmt,
 		))
 	}
 	fmt.Printf("run one statment [%s] successfully!\n", selectStmt)
@@ -265,7 +265,6 @@ func (p *Pivot) verify(originRow map[TableColumn]*connection.QueryItem, columns 
 
 func (p *Pivot) checkRow(originRow map[TableColumn]*connection.QueryItem, columns []TableColumn, resultSet []*connection.QueryItem) bool {
 	for i, c := range columns {
-		fmt.Printf("i: %d, column: %+v, left: %+v, right: %+v", i, c, originRow[c], resultSet[i])
 		if !compareQueryItem(originRow[c], resultSet[i]) {
 			return false
 		}

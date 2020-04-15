@@ -16,6 +16,7 @@ package util
 import (
 	"fmt"
 	"math/rand"
+	"strings"
 	"time"
 
 	"github.com/pingcap/parser/ast"
@@ -80,12 +81,12 @@ func RdString(length int) string {
 
 // RdStringChar rand string with given length, letter chars only
 func RdStringChar(length int) string {
-	res := ""
+	var builder strings.Builder
 	for i := 0; i < length; i++ {
 		charCode := RdRange(97, 123)
-		res = fmt.Sprintf("%s%s", res, string(rune(charCode)))
+		builder.WriteByte(byte(charCode))
 	}
-	return res
+	return builder.String()
 }
 
 // RdType rand data type
